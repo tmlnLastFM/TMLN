@@ -7,11 +7,13 @@ package Servlets;
 
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.Chart;
+import de.umass.lastfm.Period;
 import de.umass.lastfm.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +40,7 @@ public class TmlnServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        request.getRequestDispatcher("chartjsp.jsp").forward(request, response);
+        request.getRequestDispatcher("tmlnjsp.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,12 +76,12 @@ public class TmlnServlet extends HttpServlet {
         String from = format.format(chart.getFrom());
         String to = format.format(chart.getTo());
         System.out.printf("Charts for %s for the week from %s to %s:%n", user, from, to);
-        Collection<Artist> artists = chart.getEntries();
+        List<Artist> artists = (List<Artist>)chart.getEntries();
         request.setAttribute("artists", artists);
         for (Artist artist : artists) {
             System.out.println(artist.getName());
         }
-        request.getRequestDispatcher("chartjsp.jsp").forward(request, response);
+        request.getRequestDispatcher("tmlnjsp.jsp").forward(request, response);
     }
 
     /**

@@ -9,16 +9,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="../js/chart.js" type="text/javascript"></script>
         <title>TMLN</title>
     </head>
     <body>
         <h1>TMLN</h1>
+        
         <form action="TmlnServlet" method="POST">
+            
             <c:forEach var="artist" items="${artists}" end="9">
                 ${artist.getName()}<br>
             </c:forEach>
-            
-            <jsp:include page="chartjsp.jsp"/>
+                
+            <div id="chartContainer" style="height: 370px; width: 60%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             
             <input type="submit" value="submit" />
         </form>

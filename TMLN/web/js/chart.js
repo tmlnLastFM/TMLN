@@ -8,9 +8,6 @@ window.onload = function () {
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "light2",
-        title:{
-            text: "TMLN"
-        },
         axisX: {
             valueFormatString: "DD MMM,YY",
         },
@@ -18,6 +15,8 @@ window.onload = function () {
             minimum:0.5,
             maximum:10,
             reversed: true,
+            gridColor: "#F5F5F5",
+            interval: 1,
         },
         legend:{
             cursor: "pointer",
@@ -39,7 +38,7 @@ window.onload = function () {
                 { x: new Date(2017,6,27), y: 2 },
                 { x: new Date(2017,6,28), y: 1 },
                 { x: new Date(2017,6,29), y: 2 },
-                { x: new Date(2017,6,30), y: 1 }
+                { x: new Date(2017,6,30), y: 5 }
             ]
         },
         {
@@ -48,13 +47,45 @@ window.onload = function () {
             yValueFormatString: "#0.",
             showInLegend: true,
             dataPoints: [
-                { x: new Date(2017,6,24), y: 2 },
+                { x: new Date(2017,6,24), y: 5 },
                 { x: new Date(2017,6,25), y: 1 },
                 { x: new Date(2017,6,26), y: 2 },
                 { x: new Date(2017,6,27), y: 3 },
                 { x: new Date(2017,6,28), y: 2 },
                 { x: new Date(2017,6,29), y: 1 },
                 { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Drain Me",
+            type: "line",
+            color: "lightgrey",
+            yValueFormatString: "#0.",
+            showInLegend: false,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 4 },
+                { x: new Date(2017,6,25), y: 5 },
+                { x: new Date(2017,6,26), y: 4 },
+                { x: new Date(2017,6,27), y: 4 },
+                { x: new Date(2017,6,28), y: 5 },
+                { x: new Date(2017,6,29), y: 3 },
+                { x: new Date(2017,6,30), y: 1 }
+            ]
+        },
+        {
+            name: "I've Been Waiting",
+            type: "line",
+            color: "lightgrey",
+            yValueFormatString: "#0.",
+            showInLegend: false,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 2 },
+                { x: new Date(2017,6,25), y: 4 },
+                { x: new Date(2017,6,26), y: 5 },
+                { x: new Date(2017,6,27), y: 5 },
+                { x: new Date(2017,6,28), y: 3 },
+                { x: new Date(2017,6,29), y: 4 },
+                { x: new Date(2017,6,30), y: 4 }
             ]
         },
         {
@@ -68,7 +99,7 @@ window.onload = function () {
                 { x: new Date(2017,6,26), y: 3 },
                 { x: new Date(2017,6,27), y: 1 },
                 { x: new Date(2017,6,28), y: 4 },
-                { x: new Date(2017,6,29), y: 3 },
+                { x: new Date(2017,6,29), y: 5 },
                 { x: new Date(2017,6,30), y: 3 }
             ]
         }]

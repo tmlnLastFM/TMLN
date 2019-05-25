@@ -40,7 +40,8 @@ public class TmlnServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        request.getRequestDispatcher("tmlnjsp.jsp").forward(request, response);
+        request.setAttribute("artists", "");
+        request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,11 +78,11 @@ public class TmlnServlet extends HttpServlet {
         String to = format.format(chart.getTo());
         System.out.printf("Charts for %s for the week from %s to %s:%n", user, from, to);
         List<Artist> artists = (List<Artist>)chart.getEntries();
-        request.setAttribute("artists", artists);
+        request.getSession().setAttribute("artists", artists);
         for (Artist artist : artists) {
             System.out.println(artist.getName());
         }
-        request.getRequestDispatcher("tmlnjsp.jsp").forward(request, response);
+        request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
 
     /**

@@ -2,7 +2,7 @@
     Document   : chartjsp
     Created on : 06.05.2019, 19:31:12
     Author     : michi
---%>"
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

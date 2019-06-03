@@ -71,7 +71,7 @@ public class TmlnServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String key = "4d2f280d1bdd14ca03f7383532c38d7f";
-        String user = "iMichi8";
+        String user = "nici6120";
         Chart<Artist> chart = User.getWeeklyArtistChart(user, 10, key);
         DateFormat format = DateFormat.getDateInstance();
         String from = format.format(chart.getFrom());

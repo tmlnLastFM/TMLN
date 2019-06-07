@@ -13,6 +13,10 @@ import de.umass.lastfm.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -71,21 +75,33 @@ public class TmlnServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = "nici6120";
+        String user = "iMichi8"; // Testuser
+        ZoneId timezone = ZoneId.systemDefault();
+        
+        // Parameter einlesen
+        user = request.getParameter("username");
+        
+        // Zeitraum einlesen und in Epoch-Format bringen
+        // ToDo: Zeitraum einlesen
+        LocalDateTime fromTime = LocalDateTime.parse("01.01.2019  00:00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy  HH:mm:ss"));
+        LocalDateTime toTime = LocalDateTime.parse("01.05.2019  00:00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy  HH:mm:ss"));
+        String from = Long.toString(fromTime.atZone(timezone).toEpochSecond());
+        String to = Long.toString(toTime.atZone(timezone).toEpochSecond());
         
         // Berechnung der Top 10 des Zeitraums
-        // Zeitraum muss noch per Input einlesbar gemacht werden
-        
-        // getWeeklyArtist statt getTopArtists
-        // Epoch Time
-        
-        Collection<Artist> topLastfmArtists = User.getTopArtists(user, Period.SIX_MONTHS, key);
+        Collection<Artist> topLastfmArtists = User.getWeeklyArtistChart(user, from, to, 0, key).getEntries();
         TMLNArtist[] top10Artists = new TMLNArtist[10];
         int i = 0;
         for (Artist topArtist : topLastfmArtists) {
             top10Artists[i++] = new TMLNArtist(i,topArtist.getName(),topArtist.getPlaycount());
             if(i==10) { break; }
         }
+        
+        // ToDo: eingelesenen Zeitraum mit eingelesener Methode (Monatlich, Wöchentlich, Jährlich) runterbrechen
+        
+        // ToDo: Erstellen der List für berechnete Zeiträume
+        
+        // Attribute setzen un an jsp weiterleiten
         request.getSession().setAttribute("top10", top10Artists);
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }

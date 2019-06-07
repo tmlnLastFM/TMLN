@@ -18,6 +18,7 @@
         
         <form action="TmlnServlet" method="POST">
             
+            <input type="text" name="username" value="${username}" />
             <input type="submit" value="submit" />
                 
             <div id="chartContainer"></div>

@@ -9,13 +9,13 @@ package Beans;
  *
  * @author michi
  */
-public class Track {
+public class TMLNTrack {
     
     
     String titel, artist, farbe;
     int playcount, x,y;
 
-    public Track(String titel, String artist, String farbe, int playcount, int x, int y) {
+    public TMLNTrack(String titel, String artist, String farbe, int playcount, int x, int y) {
         this.titel = titel;
         this.artist = artist;
         this.farbe = farbe;

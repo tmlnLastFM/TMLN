@@ -18,7 +18,7 @@ window.onload = function () {
             gridColor: "#F5F5F5",
             interval: 1,
         },
-        legend:{
+        legend: {
             cursor: "pointer",
             fontSize: 16,
             itemclick: toggleDataSeries

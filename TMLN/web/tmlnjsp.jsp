@@ -20,12 +20,12 @@
             
             <input type="submit" value="submit" />
                 
-            <div id="chartContainer" style="height: 370px; width: 60%; float: left;"></div>
+            <div id="chartContainer"></div>
             <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             
-            <div style="height: 370px; width: 40%; float: right;">
-                <c:forEach var="artist" items="${artists}" end="9">
-                    ${artist.getName()}<br>
+            <div id="top10">
+                <c:forEach var="artist" items="${top10}">
+                    ${artist.getPlace()}. ${artist.getName()} - ${artist.getPlaycount()} Plays<br>
                 </c:forEach>
             </div>  
         </form>

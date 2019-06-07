@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Beans.TMLNArtist;
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.Chart;
 import de.umass.lastfm.Period;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "TmlnServlet", urlPatterns = {"/TmlnServlet"})
 public class TmlnServlet extends HttpServlet {
-
+    private static String key = "4d2f280d1bdd14ca03f7383532c38d7f";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -40,7 +41,7 @@ public class TmlnServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        request.setAttribute("artists", "");
+        request.getSession().setAttribute("top10", "");
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
 
@@ -70,18 +71,22 @@ public class TmlnServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String key = "4d2f280d1bdd14ca03f7383532c38d7f";
         String user = "nici6120";
-        Chart<Artist> chart = User.getWeeklyArtistChart(user, 10, key);
-        DateFormat format = DateFormat.getDateInstance();
-        String from = format.format(chart.getFrom());
-        String to = format.format(chart.getTo());
-        System.out.printf("Charts for %s for the week from %s to %s:%n", user, from, to);
-        List<Artist> artists = (List<Artist>)chart.getEntries();
-        request.getSession().setAttribute("artists", artists);
-        for (Artist artist : artists) {
-            System.out.println(artist.getName());
+        
+        // Berechnung der Top 10 des Zeitraums
+        // Zeitraum muss noch per Input einlesbar gemacht werden
+        
+        // getWeeklyArtist statt getTopArtists
+        // Epoch Time
+        
+        Collection<Artist> topLastfmArtists = User.getTopArtists(user, Period.SIX_MONTHS, key);
+        TMLNArtist[] top10Artists = new TMLNArtist[10];
+        int i = 0;
+        for (Artist topArtist : topLastfmArtists) {
+            top10Artists[i++] = new TMLNArtist(i,topArtist.getName(),topArtist.getPlaycount());
+            if(i==10) { break; }
         }
+        request.getSession().setAttribute("top10", top10Artists);
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
 

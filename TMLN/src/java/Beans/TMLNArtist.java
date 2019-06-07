@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import de.umass.lastfm.Artist;
 import de.umass.lastfm.Period;
 import de.umass.lastfm.User;
 import java.util.Collection;
@@ -15,38 +16,18 @@ import java.util.List;
  *
  * @author michi
  */
-public class Artist {
+public class TMLNArtist {
+    int place;
+    String name, farbe; 
+    int playcount, x, y; 
     
-    public static void main(String[] args) {
-        
-        String key = "4d2f280d1bdd14ca03f7383532c38d7f";
-        String user = "nici6120";
-        
-        Collection<de.umass.lastfm.Artist> topArtists = User.getTopArtists(user, Period.OVERALL, key);
-        List<String> artistNames = new LinkedList<String>();
-        List<Integer> playCounts = new LinkedList<Integer>();
-        for (de.umass.lastfm.Artist topArtist : topArtists) {
-            artistNames.add(topArtist.getName());
-            playCounts.add(topArtist.getPlaycount());
-        }
-        
-        
-        System.out.println(artistNames);
-        System.out.println(playCounts);
-        
-        
-    }
-    
-    
-    public Artist(String name, int playcount){
+    public TMLNArtist(int place, String name, int playcount){
+        this.place = place;
         this.name = name;
         this.playcount = playcount;
     }
-    
-    String name, farbe; 
-    int playcount, x, y; 
 
-    public Artist(String name, String farbe, int playcount, int x, int y) {
+    public TMLNArtist(String name, String farbe, int playcount, int x, int y) {
         this.name = name;
         this.farbe = farbe;
         this.playcount = playcount;
@@ -54,10 +35,17 @@ public class Artist {
         this.y = y;
     }
 
-    public Artist() {
+    public TMLNArtist() {
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
     }
     
-
     public String getName() {
         return name;
     }

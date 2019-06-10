@@ -5,31 +5,34 @@
  */
 package Beans;
 
+import java.awt.Color;
+import java.util.HashMap;
+
 /**
  *
  * @author michi
  */
 public class TMLNTrack {
     
-    
-    String titel, artist, farbe;
-    int playcount, x,y;
+    String title, artist;
+    Color color;
+    int playcount;
+    HashMap<Integer,Integer> coords;
 
-    public TMLNTrack(String titel, String artist, String farbe, int playcount, int x, int y) {
-        this.titel = titel;
+    public TMLNTrack(String title, String artist, Color color, int playcount, HashMap<Integer, Integer> coords) {
+        this.title = title;
         this.artist = artist;
-        this.farbe = farbe;
+        this.color = color;
         this.playcount = playcount;
-        this.x = x;
-        this.y = y;
+        this.coords = coords;
     }
     
-    public String getTitel() {
-        return titel;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getArtist() {
@@ -40,12 +43,12 @@ public class TMLNTrack {
         this.artist = artist;
     }
 
-    public String getFarbe() {
-        return farbe;
+    public Color getColor() {
+        return color;
     }
 
-    public void setFarbe(String farbe) {
-        this.farbe = farbe;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public int getPlaycount() {
@@ -56,22 +59,11 @@ public class TMLNTrack {
         this.playcount = playcount;
     }
 
-    public int getX() {
-        return x;
+    public HashMap<Integer, Integer> getCoords() {
+        return coords;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setCoords(HashMap<Integer, Integer> coords) {
+        this.coords = coords;
     }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-    
-    
-    
 }

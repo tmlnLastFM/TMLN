@@ -8,7 +8,9 @@ package Beans;
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.Period;
 import de.umass.lastfm.User;
+import java.awt.Color;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,8 +20,10 @@ import java.util.List;
  */
 public class TMLNArtist {
     int place;
-    String name, farbe; 
-    int playcount, x, y; 
+    String name; 
+    Color color;
+    int playcount; 
+    HashMap<Integer,Integer> coords;
     
     public TMLNArtist(int place, String name, int playcount){
         this.place = place;
@@ -27,15 +31,9 @@ public class TMLNArtist {
         this.playcount = playcount;
     }
 
-    public TMLNArtist(String name, String farbe, int playcount, int x, int y) {
+    public TMLNArtist(String name, HashMap<Integer, Integer> coords) {
         this.name = name;
-        this.farbe = farbe;
-        this.playcount = playcount;
-        this.x = x;
-        this.y = y;
-    }
-
-    public TMLNArtist() {
+        this.coords = coords;
     }
 
     public int getPlace() {
@@ -54,12 +52,12 @@ public class TMLNArtist {
         this.name = name;
     }
 
-    public String getFarbe() {
-        return farbe;
+    public Color getColor() {
+        return color;
     }
 
-    public void setFarbe(String farbe) {
-        this.farbe = farbe;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public int getPlaycount() {
@@ -70,27 +68,11 @@ public class TMLNArtist {
         this.playcount = playcount;
     }
 
-    public int getX() {
-        return x;
+    public HashMap<Integer, Integer> getCoords() {
+        return coords;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setCoords(HashMap<Integer, Integer> coords) {
+        this.coords = coords;
     }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    @Override
-    public String toString() {
-        return "Artist{" + "name=" + name + ", farbe=" + farbe + ", playcount=" + playcount + ", x=" + x + ", y=" + y + '}';
-    }
-    
-    
-    
 }

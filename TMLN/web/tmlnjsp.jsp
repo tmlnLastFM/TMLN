@@ -18,7 +18,18 @@
         
         <form action="TmlnServlet" method="POST">
             
-            <input type="text" name="username" value="${username}" />
+            <input type="text" name="username" value="${param.username}" />
+            <select name="type" value="1">
+                <option value="1"<c:if test="${param.type==1}">selected</c:if>>Top Artists</option>
+           <%-- <option value="2"<c:if test="${param.type==2}">selected</c:if>>Top Albums</option> --%>
+                <option value="3"<c:if test="${param.type==3}">selected</c:if>>Top Tracks</option>
+            </select>
+            <%-- Range --%>
+            <select name="scale" value="2">
+                <option value="1"<c:if test="${param.type==1}">selected</c:if>>Weekly</option>
+                <option value="2"<c:if test="${param.type==2}">selected</c:if>>Monthly</option>
+                <option value="3"<c:if test="${param.type==3}">selected</c:if>>Yearly</option>
+            </select>
             <input type="submit" value="submit" />
                 
             <div id="chartContainer"></div>

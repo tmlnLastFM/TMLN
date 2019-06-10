@@ -75,11 +75,11 @@ public class TmlnServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = "iMichi8"; // Testuser
+        String user = request.getParameter("username").equals("") ? "iMichi8" : request.getParameter("username"); //Testuser - nur zu Testzwecken
         ZoneId timezone = ZoneId.systemDefault();
         
         // Parameter einlesen
-        user = request.getParameter("username");
+        // String user = request.getParameter("username"); 
         
         // Zeitraum einlesen und in Epoch-Format bringen
         // ToDo: Zeitraum einlesen
@@ -88,7 +88,7 @@ public class TmlnServlet extends HttpServlet {
         String from = Long.toString(fromTime.atZone(timezone).toEpochSecond());
         String to = Long.toString(toTime.atZone(timezone).toEpochSecond());
         
-        // Berechnung der Top 10 des Zeitraums
+        // Berechnung der Top 10 Artists des Zeitraums
         Collection<Artist> topLastfmArtists = User.getWeeklyArtistChart(user, from, to, 0, key).getEntries();
         TMLNArtist[] top10Artists = new TMLNArtist[10];
         int i = 0;

@@ -4,19 +4,21 @@
  * and open the template in the editor.
  */
 
+/* global CanvasJS */
+
 window.onload = function () {
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
         theme: "light2",
         axisX: {
-            valueFormatString: "DD MMM,YY",
+            valueFormatString: "DD MMM,YY"
         },
         axisY: {
             minimum:0.5,
             maximum:10,
             reversed: true,
             gridColor: "#F5F5F5",
-            interval: 1,
+            interval: 1
         },
         legend: {
             cursor: "pointer",

@@ -28,42 +28,36 @@
         <form action="TmlnServlet" method="POST">
 
 
-            <input type="text" name="username" value="${param.username} username" />
+            <input type="text" name="username" value="${param.username}" />
             <select name="type" value="1">
                 <option value="1"<c:if test="${param.type==1}">selected</c:if>>Top Artists</option>
                 <%-- <option value="2"<c:if test="${param.type==2}">selected</c:if>>Top Albums</option> --%>
                 <option value="3"<c:if test="${param.type==3}">selected</c:if>>Top Tracks</option>
                 </select>
-            <%-- Range --%>
-            
-
-                
-                
-                
-                    <div class="dropdown">
-                        <input type="button" onclick="myFunction()" class="dropbtn" value="Period">
-                        <div class="dropdown-content" id="myDropdown">
-                            <a href="#" id="last">Last 7 days</a>
-                            <a href="#" id="">Last 30 days</a>
-                            <a href="#" onclick="">Last 90 days</a>
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-header">From</div>
-                            <a><input type="date" /></a>
-                            <div class="dropdown-header">To</div>
-                            <a><input type="date" /></a>                        
-                        </div>
+                <div class="dropdown">
+                    <input type="button" onclick="myFunction()" class="dropbtn" value="Period">
+                    <div class="dropdown-content" id="myDropdown">
+                        <a href="#" id="last">Last 7 days</a>
+                        <a href="#" id="">Last 30 days</a>
+                        <a href="#" onclick="">Last 90 days</a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-header">From</div>
+                        <a><input type="date" /></a>
+                        <div class="dropdown-header">To</div>
+                        <a><input type="date" /></a>                        
                     </div>
-            
-            <select name="scale" value="2">
-                <option value="1"<c:if test="${param.type==1}">selected</c:if>>Weekly</option>
+                </div>
+
+                <select name="scale" value="2">
+                    <option value="1"<c:if test="${param.type==1}">selected</c:if>>Weekly</option>
                 <option value="2"<c:if test="${param.type==2}">selected</c:if>>Monthly</option>
                 <option value="3"<c:if test="${param.type==3}">selected</c:if>>Yearly</option>
                 </select>
-            
-            
-               <input type="submit" value="Submit" class='dropbtn'/>
+
+
+                <input type="submit" value="Submit" class='dropbtn'/>
                 <br><br><br>
-                
+
 
                 <div id="chartContainer"></div>
                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

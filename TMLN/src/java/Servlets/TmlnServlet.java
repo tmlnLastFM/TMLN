@@ -6,6 +6,8 @@
 package Servlets;
 
 import Beans.TMLNArtist;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.Chart;
 import de.umass.lastfm.Period;
@@ -13,13 +15,16 @@ import de.umass.lastfm.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +36,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "TmlnServlet", urlPatterns = {"/TmlnServlet"})
 public class TmlnServlet extends HttpServlet {
-    private static String key = "4d2f280d1bdd14ca03f7383532c38d7f";
+    private static final String KEY = "4d2f280d1bdd14ca03f7383532c38d7f";
+    private static final ZoneId TIMEZONE = ZoneId.systemDefault();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,28 +82,45 @@ public class TmlnServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String user = request.getParameter("username").equals("") ? "iMichi8" : request.getParameter("username"); //Testuser - nur zu Testzwecken
-        ZoneId timezone = ZoneId.systemDefault();
+        Gson gson = new GsonBuilder().create();
         
         // Parameter einlesen
         // String user = request.getParameter("username"); 
+        int type = Integer.parseInt(request.getParameter("type"));
+        // ToDo: Range
+        int scale = Integer.parseInt(request.getParameter("scale"));
         
         // Zeitraum einlesen und in Epoch-Format bringen
         // ToDo: Zeitraum einlesen
         LocalDateTime fromTime = LocalDateTime.parse("01.01.2019  00:00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy  HH:mm:ss"));
         LocalDateTime toTime = LocalDateTime.parse("01.05.2019  00:00:00", DateTimeFormatter.ofPattern("dd.MM.yyyy  HH:mm:ss"));
-        String from = Long.toString(fromTime.atZone(timezone).toEpochSecond());
-        String to = Long.toString(toTime.atZone(timezone).toEpochSecond());
+        long from = fromTime.atZone(TIMEZONE).toEpochSecond();
+        long to = toTime.atZone(TIMEZONE).toEpochSecond();
         
         // Berechnung der Top 10 Artists des Zeitraums
-        Collection<Artist> topLastfmArtists = User.getWeeklyArtistChart(user, from, to, 0, key).getEntries();
+        Collection<Artist> top10LastfmArtists = User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries();
         TMLNArtist[] top10Artists = new TMLNArtist[10];
         int i = 0;
-        for (Artist topArtist : topLastfmArtists) {
+        for (Artist topArtist : top10LastfmArtists) {
             top10Artists[i++] = new TMLNArtist(i,topArtist.getName(),topArtist.getPlaycount());
             if(i==10) { break; }
         }
+        String data = gson.toJson(top10Artists);
+        System.out.println(data);
         
-        // ToDo: eingelesenen Zeitraum mit eingelesener Methode (Monatlich, Wöchentlich, Jährlich) runterbrechen
+        // ToDo: eingelesenen Zeitraum mit eingelesener Methode (Wöchentlich, Monatlich, Jährlich) runterbrechen
+        switch(scale) {
+            case 1: //ToDo: Weekly
+                System.out.println(gson.toJson(getWeeklyData(user, fromTime, toTime)));
+                break;
+            case 2: //ToDo: Monthly
+                
+                break;
+            case 3: //ToDo: Yearly
+                
+                break;
+            default:
+        }
         
         // ToDo: Erstellen der List für berechnete Zeiträume
         
@@ -106,6 +129,41 @@ public class TmlnServlet extends HttpServlet {
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
 
+    private TMLNArtist[] getWeeklyData(String user, LocalDateTime fromTime, LocalDateTime toTime) {
+        long from = toTime.with(DayOfWeek.MONDAY).atZone(TIMEZONE).toEpochSecond();
+        long to = toTime.atZone(TIMEZONE).toEpochSecond();
+        int i;
+        boolean exists;
+        TMLNArtist[] topArtists = new TMLNArtist[1000000];
+        HashMap<String,Integer> coords = new HashMap<>();
+        
+        while(from>=fromTime.atZone(TIMEZONE).toEpochSecond()) {
+            Collection<Artist> lastfmCollection = User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries();
+            i=0;
+            exists=false;
+            for (Artist artist : lastfmCollection) {
+                if(topArtists!=null) {
+                    for (TMLNArtist topArtist : topArtists) {
+                        if (artist.getName().equals(topArtist.getName())) {
+                            topArtist.getCoords().put(Long.toString(from), i+1);
+                            exists=true;
+                        } else {
+                            topArtist.getCoords().put(Long.toString(from), 11);
+                        }
+                    }
+                }
+                if(!exists) {
+                    topArtists[topArtists.length] = new TMLNArtist(artist.getName(),coords);
+                    topArtists[topArtists.length-1].getCoords().put(Long.toString(from), i+1);
+                }
+                if(i++==9) { break; }
+            }
+            to=from;
+            from-=604800;
+        }
+        return topArtists;
+    }
+    
     /**
      * Returns a short description of the servlet.
      *

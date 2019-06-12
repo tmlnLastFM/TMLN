@@ -23,7 +23,7 @@ public class TMLNArtist {
     String name; 
     Color color;
     int playcount; 
-    HashMap<Integer,Integer> coords;
+    HashMap<String,Integer> coords;
     
     public TMLNArtist(int place, String name, int playcount){
         this.place = place;
@@ -31,7 +31,7 @@ public class TMLNArtist {
         this.playcount = playcount;
     }
 
-    public TMLNArtist(String name, HashMap<Integer, Integer> coords) {
+    public TMLNArtist(String name, HashMap<String, Integer> coords) {
         this.name = name;
         this.coords = coords;
     }
@@ -68,11 +68,11 @@ public class TMLNArtist {
         this.playcount = playcount;
     }
 
-    public HashMap<Integer, Integer> getCoords() {
+    public HashMap<String, Integer> getCoords() {
         return coords;
     }
 
-    public void setCoords(HashMap<Integer, Integer> coords) {
+    public void setCoords(HashMap<String, Integer> coords) {
         this.coords = coords;
     }
 }

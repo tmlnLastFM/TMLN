@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +46,11 @@ public class TmlnServlet extends HttpServlet {
 
     private static final String KEY = "4d2f280d1bdd14ca03f7383532c38d7f";
     private static final ZoneId TIMEZONE = ZoneId.systemDefault();
+    private LinkedList<Long> yList;
+
+    public TmlnServlet() {
+        this.yList = new LinkedList<>();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,6 +65,7 @@ public class TmlnServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        request.getSession().setAttribute("data", "");
         request.getSession().setAttribute("top10", "");
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
@@ -91,6 +98,7 @@ public class TmlnServlet extends HttpServlet {
             throws ServletException, IOException {
         String user = request.getParameter("username").equals("") ? "iMichi8" : request.getParameter("username"); //Testuser - nur zu Testzwecken
         Gson gson = new GsonBuilder().create();
+        yList = new LinkedList<>();
 
         // Parameter einlesen
         // String user = request.getParameter("username"); 
@@ -107,7 +115,6 @@ public class TmlnServlet extends HttpServlet {
 
         // eingelesenen Zeitraum mit eingelesenem Scale (Wöchentlich, Monatlich, Jährlich) runterbrechen
         LinkedList<TMLNArtist> dataList = getData(scale, user, fromTime, toTime);
-        System.out.println(gson.toJson(dataList));
         
         // Berechnung der Top 10 Artists des Zeitraums
         List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
@@ -125,25 +132,29 @@ public class TmlnServlet extends HttpServlet {
         }
         
         // Attribute setzen un an jsp weiterleiten
+        Collections.reverse(yList);
+        request.setAttribute("yList", yList);
         request.setAttribute("data", dataList);
         request.getSession().setAttribute("top10", top10Artists);
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
     
-    private Color getColor(int i) {
+    private int[] getColor(int i) {
+        int[] rgb;
         switch (i) {
-            case 1: return new Color(204,37,41);
-            case 2: return new Color(57,106,177);
-            case 3: return new Color(218,124,48);
-            case 4: return new Color(62,150,81);
-            case 5: return new Color(83,81,84);
-            case 6: return new Color(107,76,154);
-            case 7: return new Color(146,36,40);
-            case 8: return new Color(148,139,61);
-            case 9: return new Color(27,185,169);
-            case 10: return new Color(225,230,54);
-            default: return null;
+            case 1: rgb=new int[] {204,37,41}; break;
+            case 2: rgb=new int[] {57,106,177}; break;
+            case 3: rgb=new int[] {218,124,48}; break;
+            case 4: rgb=new int[] {62,150,81}; break;
+            case 5: rgb=new int[] {83,81,84}; break;
+            case 6: rgb=new int[] {107,76,154}; break;
+            case 7: rgb=new int[] {146,36,40}; break;
+            case 8: rgb=new int[] {148,139,61}; break;
+            case 9: rgb=new int[] {27,185,169}; break;
+            case 10: rgb=new int[] {225,230,54}; break;
+            default: rgb=new int[] {211,211,211};
         }
+        return rgb;
     }
     
     private LinkedList<TMLNArtist> getData(int scale, String user, LocalDateTime fromTime, LocalDateTime toTime) {
@@ -162,7 +173,8 @@ public class TmlnServlet extends HttpServlet {
         while (from >= fromTime.atZone(TIMEZONE).toEpochSecond()) {
             List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
             List<Artist> lastfmTop10 = lastfmChart.size()>=10?lastfmChart.subList(0, 10):lastfmChart.subList(0, lastfmChart.size());
-            i = 1;
+            Collections.reverse(lastfmTop10);
+            i = 10;
             exists = false;
             for (Artist lastfmArtist : lastfmTop10) 
             {
@@ -173,21 +185,20 @@ public class TmlnServlet extends HttpServlet {
                     {
                         Map<Object, Object> coords = new HashMap<Object,Object>(); coords.put("x", from); coords.put("y", i);
                         artist.getCoordsList().add(coords);
-                        System.out.println(allArtists.getLast().getCoordsList().toString());
                         exists = true;
                         break;
                     } 
                 }
                 if (!exists) 
                 {
-                    allArtists.add(new TMLNArtist(lastfmArtist.getName(), new ArrayList<>(),Color.LIGHT_GRAY));
+                    allArtists.add(new TMLNArtist(lastfmArtist.getName(), new ArrayList<>(),new int[] {211,211,211}));
                     Map<Object, Object> coords = new HashMap<Object,Object>(); coords.put("x", from); coords.put("y", i);
                     allArtists.getLast().getCoordsList().add(coords);
-                    System.out.println(allArtists.getLast().getCoordsList().toString());
                 }
-                i++;
+                i--;
             }
             to = from;
+            yList.add(from); 
             switch(scale) {
                 case 1: from -= 604800; break;
                 case 2: from = LocalDateTime.ofInstant(Instant.ofEpochSecond(from-86400), TIMEZONE).withDayOfMonth(1).atZone(TIMEZONE).toEpochSecond(); break;

@@ -10,7 +10,7 @@ and open the template in the editor.
 
 body {
     font-family: Helvetica;
-    
+
 }
 
 #chartContainer {
@@ -21,44 +21,71 @@ body {
 
 #top10 {
     height: 370px; 
-    width: 40%; 
+    width: 25%; 
     float: right;
 }
 
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;      
+    -moz-box-shadow: 1px 1px 3px #44b4dd,-1px -1px 3px #a0a0a0; 
+    -webkit-box-shadow: 1px 1px 3px #44b4dd, -1px -1px 3px #a0a0a0;
+    -khtml-box-shadow: 1px 1px 3px #44b4dd, -1px -1px 3px #a0a0a0; 
+    box-shadow: 1px 1px 3px #44b4dd, -1px -1px 3px #a0a0a0;
+    width: 80%;
+    height: 50px;
+    margin-left: 10%;
+
+}
+
+#h{
+
+    position: relative;
+    top: 0px;
+    left: 30%; 
+}
+
+
+
+#abstand{
+    margin-left: 5px;
+    margin-right: 5px;
+}
 
 .dropbtn {
-  background-color: #00B4F1;
-  color: white;
-  padding: 5px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+    background-color: #00B4F1;
+    color: white;
+    padding: 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+    background-color: #2980B9;
 }
 
 .dropdown {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
 .dropdown a:hover {background-color: #ddd;}
@@ -69,71 +96,71 @@ body {
 
 @import url(https://fonts.googleapis.com/css?family=Lato:900);
 *, *:before, *:after{
-  box-sizing:border-box;
+    box-sizing:border-box;
 }
 body{
-  font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
     ;
 }
 div.foo{
-  width: 90%;
-  margin: 0 auto;
-  text-align: center;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
 }
 .letter{
-  display: inline-block;
-  font-weight: 900;
-  font-size: 8em;
-  margin: 0.2em;
-  position: relative;
-  color: #00B4F1;
-  transform-style: preserve-3d;
-  perspective: 400;
-  z-index: 1;
+    display: inline-block;
+    font-weight: 900;
+    font-size: 8em;
+    margin: 0.2em;
+    position: relative;
+    color: #00B4F1;
+    transform-style: preserve-3d;
+    perspective: 400;
+    z-index: 1;
 }
 .letter:before, .letter:after{
-  position:absolute;
-  content: attr(data-letter);
-  transform-origin: top left;
-  top:0;
-  left:0;
+    position:absolute;
+    content: attr(data-letter);
+    transform-origin: top left;
+    top:0;
+    left:0;
 }
 .letter, .letter:before, .letter:after{
-  transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 .letter:before{
-  color: #fff;
-  text-shadow: 
-    -1px 0px 1px rgba(255,255,255,.8),
-    1px 0px 1px rgba(0,0,0,.8);
-  z-index: 3;
-  transform:
-    rotateX(0deg)
-    rotateY(-15deg)
-    rotateZ(0deg);
+    color: #fff;
+    text-shadow: 
+        -1px 0px 1px rgba(255,255,255,.8),
+        1px 0px 1px rgba(0,0,0,.8);
+    z-index: 3;
+    transform:
+        rotateX(0deg)
+        rotateY(-15deg)
+        rotateZ(0deg);
 }
 .letter:after{
-  color: rgba(0,0,0,.11);
-  z-index:2;
-  transform:
-    scale(1.08,1)
-    rotateX(0deg)
-    rotateY(0deg)
-    rotateZ(0deg)
-    skew(0deg,1deg);
+    color: rgba(0,0,0,.11);
+    z-index:2;
+    transform:
+        scale(1.08,1)
+        rotateX(0deg)
+        rotateY(0deg)
+        rotateZ(0deg)
+        skew(0deg,1deg);
 }
 .letter:hover:before{
-  color: #fafafa;
-  transform:
-    rotateX(0deg)
-    rotateY(-40deg)
-    rotateZ(0deg);
+    color: #fafafa;
+    transform:
+        rotateX(0deg)
+        rotateY(-40deg)
+        rotateZ(0deg);
 }
 .letter:hover:after{
-  transform:
-    scale(1.08,1)
-    rotateX(0deg)
-    rotateY(40deg)
-    rotateZ(0deg)
-    skew(0deg,22deg);
+    transform:
+        scale(1.08,1)
+        rotateX(0deg)
+        rotateY(40deg)
+        rotateZ(0deg)
+        skew(0deg,22deg);
 }

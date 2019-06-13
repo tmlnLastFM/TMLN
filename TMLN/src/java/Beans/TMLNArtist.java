@@ -24,24 +24,17 @@ public class TMLNArtist {
     int place;
     String name; 
     int playcount; 
-    HashMap<String,Integer> coords;
     List<Map<Object,Object>> coordsList;
-    Color color;
+    int[] color;
     
-    public TMLNArtist(int place, String name, int playcount, Color color){
+    public TMLNArtist(int place, String name, int playcount, int[] color){
         this.place = place;
         this.name = name;
         this.playcount = playcount;
         this.color = color;
     }
 
-    public TMLNArtist(String name, HashMap<String, Integer> coords, Color color) {
-        this.name = name;
-        this.coords = coords;
-        this.color = color;
-    }
-
-    public TMLNArtist(String name, List<Map<Object, Object>> coordsList, Color color) {
+    public TMLNArtist(String name, List<Map<Object, Object>> coordsList, int[] color) {
         this.name = name;
         this.coordsList = coordsList;
         this.color = color;
@@ -63,11 +56,11 @@ public class TMLNArtist {
         this.name = name;
     }
 
-    public Color getColor() {
+    public int[] getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int[] color) {
         this.color = color;
     }
 
@@ -77,14 +70,6 @@ public class TMLNArtist {
 
     public void setPlaycount(int playcount) {
         this.playcount = playcount;
-    }
-
-    public HashMap<String, Integer> getCoords() {
-        return coords;
-    }
-
-    public void setCoords(HashMap<String, Integer> coords) {
-        this.coords = coords;
     }
 
     public List<Map<Object, Object>> getCoordsList() {

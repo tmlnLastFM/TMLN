@@ -45,4 +45,52 @@ public class TMLNEntry {
         this.artist = artist;
         this.coords = coords;
     }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public int getPlaycount() {
+        return playcount;
+    }
+
+    public void setPlaycount(int playcount) {
+        this.playcount = playcount;
+    }
+
+    public HashMap<Integer, Integer> getCoords() {
+        return coords;
+    }
+
+    public void setCoords(HashMap<Integer, Integer> coords) {
+        this.coords = coords;
+    }
 }

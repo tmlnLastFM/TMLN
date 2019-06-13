@@ -91,6 +91,111 @@ window.onload = function () {
             ]
         },
         {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
+            name: "Legends",
+            type: "line",
+            yValueFormatString: "#0.",
+            showInLegend: true,
+            dataPoints: [
+                { x: new Date(2017,6,24), y: 5 },
+                { x: new Date(2017,6,25), y: 1 },
+                { x: new Date(2017,6,26), y: 2 },
+                { x: new Date(2017,6,27), y: 3 },
+                { x: new Date(2017,6,28), y: 2 },
+                { x: new Date(2017,6,29), y: 1 },
+                { x: new Date(2017,6,30), y: 2 }
+            ]
+        },
+        {
             name: "1 SIDED LOVE",
             type: "line",
             yValueFormatString: "#0.",

@@ -9,10 +9,12 @@ import de.umass.lastfm.Artist;
 import de.umass.lastfm.Period;
 import de.umass.lastfm.User;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,19 +23,28 @@ import java.util.List;
 public class TMLNArtist {
     int place;
     String name; 
-    Color color;
     int playcount; 
     HashMap<String,Integer> coords;
+    List<Map<Object,Object>> coordsList;
+    Color color;
     
-    public TMLNArtist(int place, String name, int playcount){
+    public TMLNArtist(int place, String name, int playcount, Color color){
         this.place = place;
         this.name = name;
         this.playcount = playcount;
+        this.color = color;
     }
 
-    public TMLNArtist(String name, HashMap<String, Integer> coords) {
+    public TMLNArtist(String name, HashMap<String, Integer> coords, Color color) {
         this.name = name;
         this.coords = coords;
+        this.color = color;
+    }
+
+    public TMLNArtist(String name, List<Map<Object, Object>> coordsList, Color color) {
+        this.name = name;
+        this.coordsList = coordsList;
+        this.color = color;
     }
 
     public int getPlace() {
@@ -74,5 +85,13 @@ public class TMLNArtist {
 
     public void setCoords(HashMap<String, Integer> coords) {
         this.coords = coords;
+    }
+
+    public List<Map<Object, Object>> getCoordsList() {
+        return coordsList;
+    }
+
+    public void setCoordsList(List<Map<Object, Object>> coordsList) {
+        this.coordsList = coordsList;
     }
 }

@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -94,5 +95,9 @@ public class TMLNEntry {
 
     public void setColor(int[] color) {
         this.color = color;
+    }
+
+    public String getColorString() {
+        return Arrays.toString(color).replace('[', ' ').replace(']', ' ');
     }
 }

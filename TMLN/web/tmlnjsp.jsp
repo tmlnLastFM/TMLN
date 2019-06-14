@@ -16,13 +16,13 @@
     Random r = new Random();
     Gson gson = new Gson();
     if (request.getAttribute("data") != "") {
-        List<TMLNEntry> artistList = (LinkedList<TMLNEntry>) request.getAttribute("data");
+        List<TMLNEntry> entryList = (LinkedList<TMLNEntry>) request.getAttribute("data");
         dataList = new LinkedList<>();
-        for (TMLNEntry artist : artistList) {
-            dataList.add("{ label: '" + artist.getArtist() + "',\n "
+        for (TMLNEntry entry : entryList) {
+            dataList.add("{ label: '" + entry.getArtist() + "',\n "
                     + "backgroundColor: 'rgba(0,0,0,0)',\n "
-                    + "borderColor: 'rgb(" + gson.toJson(artist.getColor()).replace('[', ' ').replace(']', ' ') + ")',"
-                    + "data: " + gson.toJson(artist.getCoordsList()) + "}");
+                    + "borderColor: 'rgb(" + entry.getColorString() + ")',"
+                    + "data: " + gson.toJson(entry.getCoordsList()) + "}");
         }
     }
     if (dataList != null) {
@@ -49,23 +49,23 @@
         <span class="letter" data-letter="N">N</span>
     </div>
     <form action="TmlnServlet" method="POST">
-        <div id="container"> 
+        <div id="input"> 
             Username:  
             <input type="text" name="username" value="${param.username}" id="abstand"/>
             <select name="type" value="1" id="abstand">
                 <option value="1"<c:if test="${param.type==1}">selected</c:if>>Top Artists</option>
                 <%-- <option value="2"<c:if test="${param.type==2}">selected</c:if>>Top Albums</option> --%>
                 <option value="3"<c:if test="${param.type==3}">selected</c:if>>Top Tracks</option>
-                </select>
+            </select>
 
-                <select name="scale" value="2" id="abstand">
-                    <option value="1"<c:if test="${param.type==1}">selected</c:if>>Weekly</option>
-                <option value="2"<c:if test="${param.type==2}">selected</c:if>>Monthly</option>
-                <option value="3"<c:if test="${param.type==3}">selected</c:if>>Yearly</option>
-                </select>
+            <select name="scale"value="2" id="abstand">
+                <option value="1"<c:if test="${param.scale==1}">selected</c:if>>Weekly</option>
+                <option value="2"<c:if test="${param.scale==2}">selected</c:if>>Monthly</option>
+                <option value="3"<c:if test="${param.scale==3}">selected</c:if>>Yearly</option>
+            </select>
 
-                <div class="dropdown">
-                    <input type="button" onclick="myFunction()" class="dropbtn" value="Period" id="abstand">
+            <div class="dropdown">
+                <input type="button" onclick="myFunction()" class="dropbtn" value="Period" id="abstand">
                     <div class="dropdown-content" id="myDropdown">
 <!--                        <a onclick="">last 90 days</a>
                         <a href="#" id="">last year</a>
@@ -76,40 +76,60 @@
                         <div class="dropdown-header">to</div>
                         <a><input type="date" name="to" value="${dateTo}"/></a>                        
                     </div>
-                </div>
+            </div>
 
-                <input type="submit" value="Submit" class='dropbtn' id="abstand"/>
-            </div><br>
-
+            <input type="submit" value="Submit" class='dropbtn' id="abstand"/>
+        </div><br>
+    </form>
         <c:if test="${data!=''}">
             <div id="chartContainer"><canvas id="myChart"></canvas></div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
             <script>
-                // lieber mit options: { konfigurieren?
-                    Chart.defaults.line.spanGaps = false;
-                    Chart.defaults.scale.ticks.reverse = true;
-                    Chart.defaults.global.legend.display = false;
-                    Chart.defaults.global.hover.mode = 'nearest';
                     var ctx = document.getElementById('myChart').getContext('2d');
-                    var chart = new Chart(ctx, {
+                    let chart = new Chart(ctx, {
                         type: 'line',
 
                         data: {
                             datasets: [<%=allData%>],
                             labels: <%=gson.toJson(request.getAttribute("xList"))%>
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        reverse: true
+                                    }
+                                }]
+                            },
+                            tooltips: {
+                                enabled: false,
+                                mode: 'dataset',
+                                position: 'nearest'
+                            },
+                            legend: {
+                                display: false
+                            },
+                            point: {
+                                radius: 20,
+                                hoverRadius: 6,
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)'
+                            }
                         }
                     });
             </script>
         </c:if>
-
+       
         <c:if test="${top10!=''}"> 
             <div id="top10">
-                <header id="h">TOP 10 Artists</header> <br>
-                    <c:forEach var="artist" items="${top10}">
-                    <li>${artist.getPlace()}. ${artist.getArtist()} - ${artist.getPlaycount()} Plays </li>
+                <center><header id="h">TOP 10 Artists</header> <br></center>
+                    <c:forEach var="entry" items="${top10}">
+                        <font style="color: rgb(${entry.getColorString()})">▬</font>
+                        ${entry.getPlace()}. ${entry.getArtist()} - ${entry.getPlaycount()} Plays <br>
                     </c:forEach>
             </div>  
-        </c:if>   
-    </form>
+        </c:if> 
+<!--        <div class="footer">
+            © 2019 TMLN - Michael Ulz & Nicola Kolenz
+        </div>-->
 </body>
 </html>

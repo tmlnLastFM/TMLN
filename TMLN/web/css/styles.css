@@ -13,6 +13,15 @@ body {
 
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+}
+
 #chartContainer {
     height: 370px; 
     width: 60%; 
@@ -21,11 +30,11 @@ body {
 
 #top10 {
     height: 370px; 
-    width: 25%; 
+    width: 40%; 
     float: right;
 }
 
-#container{
+#input{
     display: flex;
     align-items: center;
     justify-content: center;      
@@ -40,10 +49,8 @@ body {
 }
 
 #h{
-
     position: relative;
     top: 0px;
-    left: 30%; 
 }
 
 

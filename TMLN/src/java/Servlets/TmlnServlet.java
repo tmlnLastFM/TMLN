@@ -111,17 +111,17 @@ public class TmlnServlet extends HttpServlet {
         // eingelesenen Zeitraum mit eingelesenem Scale (Wöchentlich, Monatlich, Jährlich) runterbrechen
         LinkedList<TMLNEntry> dataList = getData(scale, user, fromTime, toTime);
         
-        // Berechnung der Top 10 Artists des Zeitraums
+        // Berechnung der Top 10 Entries des Zeitraums
         List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
         List<Artist> lastfmTop10 = lastfmChart.size()>=10?lastfmChart.subList(0, 10):lastfmChart.subList(0, lastfmChart.size());  
-        TMLNEntry[] top10Artists = new TMLNEntry[10];
+        TMLNEntry[] top10Entries = new TMLNEntry[10];
         int i = 0;
         for (Artist lastfmArtist : lastfmTop10) {
-            top10Artists[i++] = new TMLNEntry(i, lastfmArtist.getName(), lastfmArtist.getPlaycount(), getColor(i));
+            top10Entries[i++] = new TMLNEntry(i, lastfmArtist.getName(), lastfmArtist.getPlaycount(), getColor(i));
             // Farben der Top 10 setzen
-            for (TMLNEntry artist : dataList) {
-                if(artist.getArtist().equals(lastfmArtist.getName())) {
-                    artist.setColor(getColor(i));
+            for (TMLNEntry entry : dataList) {
+                if(entry.getArtist().equals(lastfmArtist.getName())) {
+                    entry.setColor(getColor(i));
                 }
             }
         }
@@ -130,7 +130,7 @@ public class TmlnServlet extends HttpServlet {
         Collections.reverse(xList);
         request.setAttribute("xList", xList);
         request.setAttribute("data", dataList);
-        request.getSession().setAttribute("top10", top10Artists);
+        request.getSession().setAttribute("top10", top10Entries);
         request.getRequestDispatcher("/tmlnjsp.jsp").forward(request, response);
     }
     
@@ -163,7 +163,7 @@ public class TmlnServlet extends HttpServlet {
         long to = toTime.atZone(TIMEZONE).toEpochSecond();
         int i;
         boolean exists, lastRun = false;
-        LinkedList<TMLNEntry> allArtists = new LinkedList<>();
+        LinkedList<TMLNEntry> allEntries = new LinkedList<>();
 
         while (from >= fromTime.atZone(TIMEZONE).toEpochSecond()) {
             List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
@@ -178,10 +178,10 @@ public class TmlnServlet extends HttpServlet {
             for (Artist lastfmArtist : lastfmTop10) 
             {
                 exists = false;
-                for (TMLNEntry artist : allArtists) 
+                for (TMLNEntry entry : allEntries) 
                 {
-                    // ToDo: set every artists x-coords value per default to 11 
-                    if (lastfmArtist.getName().equals(artist.getArtist())) 
+                    // ToDo: set every entrys x-coords value per default to 11 
+                    if (lastfmArtist.getName().equals(entry.getArtist())) 
                     {
                         Map<Object, Object> coords = new HashMap<>(); 
                         switch(scale) {
@@ -191,14 +191,14 @@ public class TmlnServlet extends HttpServlet {
                             default: coords.put("x", from);
                         } 
                         coords.put("y", i);
-                        artist.getCoordsList().add(coords);
+                        entry.getCoordsList().add(coords);
                         exists = true;
                         break;
                     } 
                 }
                 if (!exists) 
                 {
-                    allArtists.add(new TMLNEntry(lastfmArtist.getName(), new ArrayList<>(),new int[] {211,211,211}));
+                    allEntries.add(new TMLNEntry(lastfmArtist.getName(), new ArrayList<>(),new int[] {211,211,211}));
                     Map<Object, Object> coords = new HashMap<>(); 
                     switch(scale) {
                         case 1: coords.put("x", day); break;
@@ -207,7 +207,7 @@ public class TmlnServlet extends HttpServlet {
                         default: coords.put("x", from);
                     } 
                     coords.put("y", i);
-                    allArtists.getLast().getCoordsList().add(coords);
+                    allEntries.getLast().getCoordsList().add(coords);
                 }
                 i--;
             }
@@ -233,7 +233,7 @@ public class TmlnServlet extends HttpServlet {
                 from = fromTime.atZone(TIMEZONE).toEpochSecond();
             }
         } 
-        return allArtists;
+        return allEntries;
     }
 
     /**

@@ -4,7 +4,7 @@
     Author     : michi
 --%>
 <%@page import="java.util.Random"%>
-<%@page import="Beans.TMLNArtist"%>
+<%@page import="Beans.TMLNEntry"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.google.gson.Gson"%>
@@ -15,13 +15,13 @@
     String allData = "";
     Random r = new Random();
     Gson gson = new Gson();
-    if (request.getAttribute("data") != null) {
-        List<TMLNArtist> artistList = (LinkedList<TMLNArtist>) request.getAttribute("data");
+    if (request.getAttribute("data") != "") {
+        List<TMLNEntry> artistList = (LinkedList<TMLNEntry>) request.getAttribute("data");
         dataList = new LinkedList<>();
-        for (TMLNArtist artist : artistList) {
-            dataList.add("{ label: '" + artist.getName() + "',\n "
+        for (TMLNEntry artist : artistList) {
+            dataList.add("{ label: '" + artist.getArtist() + "',\n "
                     + "backgroundColor: 'rgba(0,0,0,0)',\n "
-                    + "borderColor: 'rgb("+gson.toJson(artist.getColor()).replace('[', ' ').replace(']', ' ')+")',"
+                    + "borderColor: 'rgb(" + gson.toJson(artist.getColor()).replace('[', ' ').replace(']', ' ') + ")',"
                     + "data: " + gson.toJson(artist.getCoordsList()) + "}");
         }
     }
@@ -33,21 +33,21 @@
 %>    
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <link href="css/styles.css" rel="stylesheet" type="text/css"/>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-            <script src="js/dropdown.js" type="text/javascript"></script>
-            <title>TMLN</title>
-        <div class="foo">
-            <span class="letter" data-letter="T">T</span>
-            <span class="letter" data-letter="M">M</span>
-            <span class="letter" data-letter="L">L</span>
-            <span class="letter" data-letter="N">N</span>
-        </div>
-    </head> 
-    <body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="js/dropdown.js" type="text/javascript"></script>
+    <title>TMLN</title>
+</head> 
+<body>
+    <div class="foo">
+        <span class="letter" data-letter="T">T</span>
+        <span class="letter" data-letter="M">M</span>
+        <span class="letter" data-letter="L">L</span>
+        <span class="letter" data-letter="N">N</span>
+    </div>
     <form action="TmlnServlet" method="POST">
         <div id="container"> 
             Username:  
@@ -67,48 +67,49 @@
                 <div class="dropdown">
                     <input type="button" onclick="myFunction()" class="dropbtn" value="Period" id="abstand">
                     <div class="dropdown-content" id="myDropdown">
-                        <a href="#" id="last">Last 90 Days</a>
-                        <a href="#" id="">Last half Year</a>
-                        <a href="#" onclick="">Last Year</a>
-                        <div class="dropdown-divider"></div>
-                        <div class="dropdown-header">From</div>
-                        <a><input type="date" name="from" /></a>
-                        <div class="dropdown-header">To</div>
-                        <a><input type="date" name="to"/></a>                        
+<!--                        <a onclick="">last 90 days</a>
+                        <a href="#" id="">last year</a>
+                        <a href="#" onclick="">all time</a>
+                        <div class="dropdown-divider"></div>-->
+                        <div class="dropdown-header">from</div>
+                        <a><input type="date" name="from" value="${dateFrom}"/></a>
+                        <div class="dropdown-header">to</div>
+                        <a><input type="date" name="to" value="${dateTo}"/></a>                        
                     </div>
                 </div>
 
                 <input type="submit" value="Submit" class='dropbtn' id="abstand"/>
-            </div>      
+            </div><br>
 
-            <br><br><br>
+        <c:if test="${data!=''}">
+            <div id="chartContainer"><canvas id="myChart"></canvas></div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            <script>
+                // lieber mit options: { konfigurieren?
+                    Chart.defaults.line.spanGaps = false;
+                    Chart.defaults.scale.ticks.reverse = true;
+                    Chart.defaults.global.legend.display = false;
+                    Chart.defaults.global.hover.mode = 'nearest';
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
 
-            <c:if test="${data!=''}">
-                <div id="chartContainer"><canvas id="myChart"></canvas></div>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                <script>
-                        Chart.defaults.line.spanGaps = false;  
-                        Chart.defaults.scale.ticks.reverse = true;
-                        var ctx = document.getElementById('myChart').getContext('2d');
-                        var chart = new Chart(ctx, {
-                            type: 'line',
+                        data: {
+                            datasets: [<%=allData%>],
+                            labels: <%=gson.toJson(request.getAttribute("xList"))%>
+                        }
+                    });
+            </script>
+        </c:if>
 
-                            data: {
-                                datasets: [<%=allData%>],
-                                labels: <%=gson.toJson(request.getAttribute("yList"))%>
-                            },
-                        });
-                </script>
-            </c:if>
-
-            <c:if test="${top10!=''}"> 
-                <div id="top10">
+        <c:if test="${top10!=''}"> 
+            <div id="top10">
                 <header id="h">TOP 10 Artists</header> <br>
                     <c:forEach var="artist" items="${top10}">
-                    <li>${artist.getPlace()}. ${artist.getName()} - ${artist.getPlaycount()} Plays </li>
+                    <li>${artist.getPlace()}. ${artist.getArtist()} - ${artist.getPlaycount()} Plays </li>
                     </c:forEach>
-                </div>  
-            </c:if>   
-        </form>
-    </body>
+            </div>  
+        </c:if>   
+    </form>
+</body>
 </html>

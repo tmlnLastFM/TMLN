@@ -5,8 +5,8 @@
  */
 package Beans;
 
-import java.awt.Color;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,35 +15,37 @@ import java.util.HashMap;
 public class TMLNEntry {
     int place;
     String title;
-    String artist; 
-    Color color;
+    String artist;
     int playcount; 
-    HashMap<Integer,Integer> coords;
+    List<Map<Object,Object>> coordsList;
+    int[] color;
 
-    public TMLNEntry(int place, String title, String artist, Color color, int playcount) {
+    public TMLNEntry(int place, String title, String artist, int playcount, int[] color) {
         this.place = place;
         this.title = title;
         this.artist = artist;
-        this.color = color;
         this.playcount = playcount;
+        this.color = color;
     }
 
-    public TMLNEntry(int place, String artist, Color color, int playcount) {
-        this.place = place;
-        this.artist = artist;
-        this.color = color;
-        this.playcount = playcount;
-    }
-
-    public TMLNEntry(String title, String artist, HashMap<Integer, Integer> coords) {
+    public TMLNEntry(String title, String artist, List<Map<Object, Object>> coordsList, int[] color) {
         this.title = title;
         this.artist = artist;
-        this.coords = coords;
+        this.coordsList = coordsList;
+        this.color = color;
     }
 
-    public TMLNEntry(String artist, HashMap<Integer, Integer> coords) {
+    public TMLNEntry(int place, String artist, int playcount, int[] color) {
+        this.place = place;
         this.artist = artist;
-        this.coords = coords;
+        this.playcount = playcount;
+        this.color = color;
+    }
+
+    public TMLNEntry(String artist, List<Map<Object, Object>> coordsList, int[] color) {
+        this.artist = artist;
+        this.coordsList = coordsList;
+        this.color = color;
     }
 
     public int getPlace() {
@@ -70,14 +72,6 @@ public class TMLNEntry {
         this.artist = artist;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
     public int getPlaycount() {
         return playcount;
     }
@@ -86,11 +80,19 @@ public class TMLNEntry {
         this.playcount = playcount;
     }
 
-    public HashMap<Integer, Integer> getCoords() {
-        return coords;
+    public List<Map<Object, Object>> getCoordsList() {
+        return coordsList;
     }
 
-    public void setCoords(HashMap<Integer, Integer> coords) {
-        this.coords = coords;
+    public void setCoordsList(List<Map<Object, Object>> coordsList) {
+        this.coordsList = coordsList;
+    }
+
+    public int[] getColor() {
+        return color;
+    }
+
+    public void setColor(int[] color) {
+        this.color = color;
     }
 }

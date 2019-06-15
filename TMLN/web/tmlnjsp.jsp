@@ -85,6 +85,7 @@
             <div id="chartContainer"><canvas id="myChart"></canvas></div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
             <script>
+                    Chart.defaults.global.elements.point.backgroundColor = 'rgba(0, 0, 0, 0.8)';               
                     var ctx = document.getElementById('myChart').getContext('2d');
                     let chart = new Chart(ctx, {
                         type: 'line',
@@ -102,17 +103,12 @@
                                 }]
                             },
                             tooltips: {
-                                enabled: false,
-                                mode: 'dataset',
+                                enabled: true,
+                                mode: 'point',
                                 position: 'nearest'
                             },
                             legend: {
                                 display: false
-                            },
-                            point: {
-                                radius: 20,
-                                hoverRadius: 6,
-                                backgroundColor: 'rgba(0, 0, 0, 0.8)'
                             }
                         }
                     });

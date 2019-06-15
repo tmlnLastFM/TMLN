@@ -109,7 +109,7 @@ public class TmlnServlet extends HttpServlet {
         long to = toTime.atZone(TIMEZONE).toEpochSecond();
 
         // eingelesenen Zeitraum mit eingelesenem Scale (Wöchentlich, Monatlich, Jährlich) runterbrechen
-        LinkedList<TMLNEntry> dataList = getData(scale, user, fromTime, toTime);
+        LinkedList<TMLNEntry> dataList = getData(scale, type, user, fromTime, toTime);
         
         // Berechnung der Top 10 Entries des Zeitraums
         List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
@@ -152,7 +152,7 @@ public class TmlnServlet extends HttpServlet {
         return rgb;
     }
     
-    private LinkedList<TMLNEntry> getData(int scale, String user, LocalDateTime fromTime, LocalDateTime toTime) {
+    private LinkedList<TMLNEntry> getData(int scale, int type, String user, LocalDateTime fromTime, LocalDateTime toTime) {
         long from;
         switch(scale) {
             case 1: from = toTime.with(DayOfWeek.MONDAY).atZone(TIMEZONE).toEpochSecond(); break;
@@ -165,7 +165,7 @@ public class TmlnServlet extends HttpServlet {
         boolean exists, lastRun = false;
         LinkedList<TMLNEntry> allEntries = new LinkedList<>();
 
-        while (from >= fromTime.atZone(TIMEZONE).toEpochSecond()) {
+        while (from > fromTime.atZone(TIMEZONE).toEpochSecond()) {
             List<Artist> lastfmChart = ((List<Artist>)User.getWeeklyArtistChart(user, Long.toString(from), Long.toString(to), 0, KEY).getEntries());
             List<Artist> lastfmTop10 = lastfmChart.size()>=10?lastfmChart.subList(0, 10):lastfmChart.subList(0, lastfmChart.size());
             Collections.reverse(lastfmTop10);
@@ -228,7 +228,7 @@ public class TmlnServlet extends HttpServlet {
                 default:
                     from = 0;
             }
-            if(!lastRun && from < fromTime.atZone(TIMEZONE).toEpochSecond()) { 
+            if(!lastRun && from <= fromTime.atZone(TIMEZONE).toEpochSecond()) { 
                 lastRun=true;
                 from = fromTime.atZone(TIMEZONE).toEpochSecond();
             }

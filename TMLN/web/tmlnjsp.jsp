@@ -22,6 +22,11 @@
             dataList.add("{ label: '" + entry.getArtist() + "',\n "
                     + "backgroundColor: 'rgba(0,0,0,0)',\n "
                     + "borderColor: 'rgb(" + entry.getColorString() + ")',"
+                    + "pointBackgroundColor: 'rgba(" + entry.getColorString() + ",1)',"
+                    + "pointHitRadius: 10,"
+                    + "pointRadius: 3.5,"
+                    + "pointHoverRadius: 4.5,"
+                    + "spanGaps: false,"
                     + "data: " + gson.toJson(entry.getCoordsList()) + "}");
         }
     }
@@ -34,6 +39,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js"></script>
+        <script>
+            <%if(request.getParameter("username")=="") {%>
+                $(document).ready(function () {
+                    swal("Oops", "Please enter a username!", "error");
+                });
+            <%}%>
+        </script>
+    
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/styles.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -52,11 +67,11 @@
         <div id="input"> 
             Username:  
             <input type="text" name="username" value="${param.username}" id="abstand"/>
-            <select name="type" value="1" id="abstand">
+<!--            <select name="type" value="1" id="abstand">
                 <option value="1"<c:if test="${param.type==1}">selected</c:if>>Top Artists</option>
                 <%-- <option value="2"<c:if test="${param.type==2}">selected</c:if>>Top Albums</option> --%>
                 <option value="3"<c:if test="${param.type==3}">selected</c:if>>Top Tracks</option>
-            </select>
+            </select>-->
 
             <select name="scale"value="2" id="abstand">
                 <option value="1"<c:if test="${param.scale==1}">selected</c:if>>Weekly</option>
@@ -84,8 +99,7 @@
         <c:if test="${data!=''}">
             <div id="chartContainer"><canvas id="myChart"></canvas></div>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-            <script>
-                    Chart.defaults.global.elements.point.backgroundColor = 'rgba(0, 0, 0, 0.8)';               
+            <script>           
                     var ctx = document.getElementById('myChart').getContext('2d');
                     let chart = new Chart(ctx, {
                         type: 'line',
@@ -109,6 +123,11 @@
                             },
                             legend: {
                                 display: false
+                            },
+                            elements: {
+                                line: {
+                                    tension: 0
+                                }
                             }
                         }
                     });
@@ -116,13 +135,13 @@
         </c:if>
        
         <c:if test="${top10!=''}"> 
-            <div id="top10">
-                <center><header id="h">TOP 10 Artists</header> <br></center>
+            <div id="top10"><center>
+                <h2 id="h">TOP 10 Artists</h2> <br>
                     <c:forEach var="entry" items="${top10}">
                         <font style="color: rgb(${entry.getColorString()})">▬</font>
                         ${entry.getPlace()}. ${entry.getArtist()} - ${entry.getPlaycount()} Plays <br>
                     </c:forEach>
-            </div>  
+            </div></center>  
         </c:if> 
 <!--        <div class="footer">
             © 2019 TMLN - Michael Ulz & Nicola Kolenz

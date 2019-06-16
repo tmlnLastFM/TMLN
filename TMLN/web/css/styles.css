@@ -7,7 +7,6 @@
 
 body {
     font-family: Helvetica;
-
 }
 
 .footer {
@@ -27,8 +26,10 @@ body {
 
 #top10 {
     height: 370px; 
-    width: 40%; 
+    width: 30%; 
     float: right;
+    text-align: left;
+    
 }
 
 #input{
@@ -46,7 +47,7 @@ body {
 }
 
 #h{
-    font-family: Helvetica-light;
+    font-family: Helvetica;
     position: relative;
     top: 0px;
 }

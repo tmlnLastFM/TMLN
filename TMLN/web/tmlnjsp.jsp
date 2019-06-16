@@ -136,13 +136,14 @@
         </c:if>
        
         <c:if test="${top10!=''}"> 
-            <div id="top10"><center>
-                <h2 id="h">TOP 10 Artists</h2> <br>
+            <div id="top10">
+                <h3 id="h">TOP 10 Artists</h3>
+                <%int circle = 10122;%>
                     <c:forEach var="entry" items="${top10}">
-                        <font style="color: rgb(${entry.getColorString()})">▬</font>
-                        ${entry.getPlace()}. ${entry.getArtist()} - ${entry.getPlaycount()} Plays <br>
+                        <font style="color: rgb(${entry.getColorString()}); font-size: 25px">&#<%=circle++%>&emsp;</font>
+                        ${entry.getArtist()} - ${entry.getPlaycount()} Plays <br>
                     </c:forEach>
-            </div></center>  
+            </div>
         </c:if> 
 <!--        <div class="footer">
             © 2019 TMLN - Michael Ulz & Nicola Kolenz

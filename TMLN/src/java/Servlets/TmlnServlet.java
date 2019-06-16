@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/************************************
+ *  Document   : TmlnServlet
+ *  Created on : 06.05.2019
+ *  Author     : Michael Ulz
+ *  Project    : TMLN
+************************************/
 package Servlets;
 
 import Beans.TMLNEntry;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.User;
 import java.io.IOException;

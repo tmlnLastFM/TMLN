@@ -1,7 +1,8 @@
 <%-- 
-    Document   : chartjsp
+    Document   : tmlnjsp
     Created on : 06.05.2019, 19:31:12
-    Author     : michi
+    Author     : Michael Ulz
+    Project    : TMLN
 --%>
 <%@page import="java.util.Random"%>
 <%@page import="Beans.TMLNEntry"%>

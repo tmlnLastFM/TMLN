@@ -1,8 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/************************************
+ *  Document   : TMLNEntry
+ *  Created on : 10.06.2019
+ *  Author     : Michael Ulz
+ *  Project    : TMLN
+************************************/
 package Beans;
 
 import java.util.Arrays;
